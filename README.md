@@ -1,10 +1,16 @@
-# getting-started-with-terraform
-Getting started with Terraform
+
+# Getting started with Terraform
 
 
 # What is Terraform
 
-Terraform code is written in a declarative language called HCL (HashiCorp Configuration Language). The HCL code goes into files with extension .tf. So far terraform doesn't support arrangemnet of code into folders. So all your .ts files go directly in the root level folder. 
+Terraform code is written in a declarative language called HCL (HashiCorp Configuration Language). The HCL code goes into files with extension .tf. So far terraform doesn't support arrangemnet of code into folders. So all your .ts files go directly in the root level folder. The general syntax of terraform resource is:
+
+resource "PROVIDER_TYPE" "NAME" {
+  [CONFIG ...]
+}
+
+We will discuss later, what is a resource and what this syntax mean. Here I have added it to demonstrate that how declarative the language is.
 
 # Which cloud
 It supports multiple cloud providers like
@@ -65,3 +71,28 @@ provider "aws" {
 AWS has data centers divided into regions and zones. A region is a separate geographic area such as us-east-1 and eu-west-1 which represent North Virginia nd Ireland. Within each region there are multiple isolated data centers known as availability zones such as us-east-1a etc. You can add whatever region you like or whatever region you are in.
 
 # Step 2: Create a new EC2 Instance 
+Each cloud provider supports different kinds of resources like databases, servers, load balancers etc. To deploy a single server in AWS which is known as EC2 instance (Amazon Elastic Compute Cloud Instance), you can add the aws_instance configuration. The general syntax of resource is
+
+resource "PROVIDER_TYPE" "NAME" {
+  [CONFIG ...]
+}
+
+Where PROVIDER is the name of provider like aws, azure etc. and TYPE is the type of resource that you want to create e.g instance. NAME is the identifier that you will use to reference this resource throughout the terraform code. CONFIG consists of one or more configuration parameters that are specific to that resource. These configuration can differe from provider to provider and also according to your needs. For example to add EC2 instance we can provide 6 different configurations but I will use only couple of them here i.e ami and instance_type.
+
+Enough talking, now add code. Let's add following lines in our main.tf file
+
+resource "aws_instance" "example" {
+  ami           = "ami-40d28157"
+  instance_type = "t2.micro"
+}
+
+AMI (Amazon machine image) provides the information required to launch an EC2 instance. These AMIs are available free/paid in AWS marketplace. ami-40d28157 is the ID of an ubuntu 16.04 AMI.
+
+Instance_type is the type of EC2 instance. Each type provides different CPU, memory and networking capacity. t2.micro has one virtual CPU, 1 GB memory and is part of the AWS free tier. 
+
+# Step 3: Run Terraform plan
+Open a new terminal window and go to folder where you have main.tf file and execute following command
+
+terraform plan
+
+
