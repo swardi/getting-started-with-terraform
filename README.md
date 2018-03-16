@@ -61,8 +61,8 @@ http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
 The first step to deploy a server is to configure a provider. Since we have planned to use AWS, we will have to configure AWS. We already have created our brand new account for AWS so next step is to use it in our config file.
 
 
-# Step 1: Create folder and main.tf file.
-The first and easiest step is to create an empty folder and create a file with name main.tf. Setup your provider with the following lines.
+# Step 1: Create folder and .tf file.
+The first and easiest step is to create an empty folder and create a file with name create_ec2_instance.tf. Setup your provider with the following lines.
 
 provider "aws" {
   region = "us-east-1"
@@ -79,7 +79,7 @@ resource "PROVIDER_TYPE" "NAME" {
 
 Where PROVIDER is the name of provider like aws, azure etc. and TYPE is the type of resource that you want to create e.g instance. NAME is the identifier that you will use to reference this resource throughout the terraform code. CONFIG consists of one or more configuration parameters that are specific to that resource. These configuration can differe from provider to provider and also according to your needs. For example to add EC2 instance we can provide 6 different configurations but I will use only couple of them here i.e ami and instance_type.
 
-Enough talking, now add code. Let's add following lines in our main.tf file
+Enough talking, now add code. Let's add following lines in our create_ec2_instance.tf file
 
 resource "aws_instance" "example" {
   ami           = "ami-40d28157"
@@ -91,14 +91,14 @@ AMI (Amazon machine image) provides the information required to launch an EC2 in
 Instance_type is the type of EC2 instance. Each type provides different CPU, memory and networking capacity. t2.micro has one virtual CPU, 1 GB memory and is part of the AWS free tier. 
 
 # Step 3: Initialize terraform
-Open command terminal and go to the folder where you have main.tf and run following command
+Open command terminal and go to the folder where you have create_ec2_instance.tf and run following command
 terraform init
 
 # Step 4: Run terraform plan
 Now run following command
 terraform plan
 
-This command tells you what terraform will actually do before making any changes. You can review them before actually executing the command. In the output the resources with a plus sign will be created, resources with a minus will be deleted and resources with ~ sign will get modified. The last line tells you the summary of all actions. For example the main.tf that we have created in this example will output following as summary of actions.
+This command tells you what terraform will actually do before making any changes. You can review them before actually executing the command. In the output the resources with a plus sign will be created, resources with a minus will be deleted and resources with ~ sign will get modified. The last line tells you the summary of all actions. For example the create_ec2_instance.tf that we have created in this example will output following as summary of actions.
 
 Plan: 1 to add, 0 to change, 0 to destroy.
 
