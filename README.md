@@ -90,9 +90,23 @@ AMI (Amazon machine image) provides the information required to launch an EC2 in
 
 Instance_type is the type of EC2 instance. Each type provides different CPU, memory and networking capacity. t2.micro has one virtual CPU, 1 GB memory and is part of the AWS free tier. 
 
-# Step 3: Run Terraform plan
-Open a new terminal window and go to folder where you have main.tf file and execute following command
+# Step 3: Initialize terraform
+Open command terminal and go to the folder where you have main.tf and run following command
+terraform init
 
+# Step 4: Run terraform plan
+Now run following command
 terraform plan
 
+This command tells you what terraform will actually do before making any changes. You can review them before actually executing the command. In the output the resources with a plus sign will be created, resources with a minus will be deleted and resources with ~ sign will get modified. The last line tells you the summary of all actions. For example the main.tf that we have created in this example will output following as summary of actions.
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+# Step 5: Let terraform actually create your instance
+To let terraform actually create the instance, run the following command
+
+terraform apply
+
+# Step 6: Verify
+You can now verify that your instance is really up by logging into your aws console account.
 
