@@ -4,6 +4,8 @@
 
 # What is Terraform
 
+Terraform is a tool for building, changing, and versioning infrastructure safely and efficiently using code written in configuration files. It creates an execution plan before actually executing it and also maintains a resource graph and versions the current state of the infrastructure and applies only the changes when you run it again after making changes in the configuration files.
+
 Terraform code is written in a declarative language called HCL (HashiCorp Configuration Language). The HCL code goes into files with extension .tf. So far terraform doesn't support arrangemnet of code into folders. So all your .ts files go directly in the root level folder. The general syntax of terraform resource is:
 
 resource "PROVIDER_TYPE" "NAME" {
@@ -110,3 +112,5 @@ terraform apply
 # Step 6: Verify
 You can now verify that your instance is really up by logging into your aws console account.
 If you cannot find your instance on AWS, make sure you are in the correct region. By default aws console will take you to the region near to your country.
+
+This getting started tutorial was only to demonstrate how it is to start using terraform. The next steps are more practicle and complete examples of using it.
