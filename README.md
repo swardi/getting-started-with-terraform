@@ -109,4 +109,4 @@ terraform apply
 
 # Step 6: Verify
 You can now verify that your instance is really up by logging into your aws console account.
-
+If you cannot find your instance on AWS, make sure you are in the correct region. By default aws console will take you to the region near to your country.
