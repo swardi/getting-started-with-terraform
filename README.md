@@ -59,7 +59,7 @@ For more information see the following link
 http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
 
 
-# Steps to Dedploy a Single Server
+# Steps to launch a Single EC2 Server
 The first step to deploy a server is to configure a provider. Since we have planned to use AWS, we will have to configure AWS. We already have created our brand new account for AWS so next step is to use it in our config file.
 
 
@@ -96,6 +96,8 @@ Instance_type is the type of EC2 instance. Each type provides different CPU, mem
 Open command terminal and go to the folder where you have create_ec2_instance.tf and run following command
 terraform init
 
+This command will create a .terraform folder in your working directory and download the plugins needed to create your infrastrucutre. Since you are using aws, it will download binary related to aws only.
+
 # Step 4: Run terraform plan
 Now run following command
 terraform plan
@@ -114,3 +116,8 @@ You can now verify that your instance is really up by logging into your aws cons
 If you cannot find your instance on AWS, make sure you are in the correct region. By default aws console will take you to the region near to your country.
 
 This getting started tutorial was only to demonstrate how it is to start using terraform. The next steps are more practicle and complete examples of using it.
+
+# Step to deploy a simple web server on EC2 instance
+Since we can now launch our EC2 instance without logging into the AWS console, we are ready to deploy a web server on the EC2 instance, which is most probably you would like to have on your EC2 instance.
+
+
