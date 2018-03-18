@@ -120,4 +120,75 @@ This getting started tutorial was only to demonstrate how it is to start using t
 # Step to deploy a simple web server on EC2 instance
 Since we can now launch our EC2 instance without logging into the AWS console, we are ready to deploy a web server on the EC2 instance, which is most probably you would like to have on your EC2 instance.
 
+The major steps in this process are
+1) Launch an EC2 machine
+2) Install apache server
+3) Allow traffic from outside to connect to your EC2 machine
+4) Create a user who can SSH into the server later. (This step is optional if you don't plan to login to your server)
+
+Let's create a new file with name deploy_apache_on_ec2.tf
+
+Create new security group
+
+## Step 1: Allow in-bound public access
+resource "aws_security_group" "public-group" 
+{    
+	ingress {    
+		from_port   = 8080    
+		to_port     = 8080    
+		protocol    = "tcp"    
+		cidr_blocks = ["0.0.0.0/0"]  
+	}
+	tags {
+		Name = "public-group-name"
+	}
+}
+
+## Step 2: Create security group to enable SSH access
+resource "aws_security_group" "sshable-group"{
+	name = "SSH group"
+
+	ingress{
+		from_port = 22
+		to_port =22
+		protocol = "tcp"
+		cidr_blocks = ["0.0.0.0/0"]
+	}
+
+	egress {
+	    from_port = 0
+	    to_port = 0
+	    protocol = "-1"
+	    cidr_blocks = ["0.0.0.0/0"]
+	  }
+
+
+
+	tags {
+		Name = "web_server_deployment"
+	}
+}
+
+
+## Step 3: Create EC2 Instance and run commands to deploy apache server
+
+resource "aws_instance" "Ubuntu1604" {
+  ami           = "ami-40d28157"
+  instance_type = "t2.micro"
+  tags{
+  	Name="ubuntu-machine"
+  }
+  vpc_security_group_ids = ["${aws_security_group.sshable-group.id}"]
+
+  user_data = <<-EOF
+  	#!/bin/bash              
+  	sudo apt update
+  	sudo apt -q -y upgrade     
+  	DEBIAN_FRONTEND=noninteractive sudo -E apt install -q -y lamp-server^         
+  	cd /var/www/html/
+  	sudo mv index.html index.html.backup
+  	sudo echo 'Hello World' | sudo tee index.html
+  	EOF
+}
+
 
